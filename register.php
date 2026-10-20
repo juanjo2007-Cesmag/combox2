@@ -2,20 +2,21 @@
     //Get data base connection
     require('config/database.php');
 
-    //Get data from html form (client) 
+    //Get data from html form (client)
     $f_name=$_POST['fname'];
     $l_name=$_POST['lname'];
     $m_phone=$_POST['mphone'];
     $e_mail=$_POST['email'];
     $p_assword=$_POST['psw'];
 
-    // AGREGADO: Incluimos creaded_at y updated_at con NOW() para evitar bloqueos de campos obligatorios
+    $hashed_password = password_hash($p_assword, PASSWORD_DEFAULT);
+
     $sql = "
         INSERT INTO users (
             firstname, lastname, mobile_phone, email, password
         )
         VALUES(
-            '$f_name', '$l_name', '$m_phone', '$e_mail', '$p_assword'
+            '$f_name', '$l_name', '$m_phone', '$e_mail', '$hashed_password'
         )
     ";
 
@@ -35,12 +36,4 @@
               </script>";
         exit();
     }
-
-    /*
-    echo "Firstname is: ". $f_name;
-    echo "<br>Lastname is: ". $l_name;
-    echo "<br>Mobile Phone is: ". $m_phone;
-    echo "<br>E-mail is: ". $e_mail;
-    echo "<br>Password is: ". $p_assword;
-    */
 ?>
